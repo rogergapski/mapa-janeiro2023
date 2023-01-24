@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html = style="height: 100%;">
+  <head>
+    <title>Mapa do livro "Tretas Régias"</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="scripts/leaflet.css">
+    <script src="scripts/leaflet.js"></script>
+	
+	<style>
+	.leaflet-popup-content-wrapper {
+	background: oldlace;
+    color: #000000;
+    font-size: 14px;
+    text-align: center;	
+	}
+	.leaflet-popup-tip {
+	background: oldlace;
+	pointer-events: none;
+	}
+	.leaflet-popup-pane {
+	pointer-events: none;
+	}
+	</style>
+	
+  </head>
+  
+  <body style="height: 100%;margin: 0;">
+    <div id="map" style="width: 100%; height: 100%; background: #000000;"></div>
+    <script type="text/javascript">
+  
+  //Creating the Map
+    
+	var map = L.map('map').setView([0, 0], 0);
+    L.tileLayer('map/{z}/{x}/{y}.png', {
+      continuousWorld: false,
+      noWrap: true,  
+      minZoom: 3,
+      maxZoom: 4,
+    }).addTo(map);
+	
+	var southWest = L.latLng(-70, -129),
+northEast = L.latLng(70, 129);
+var bounds = L.latLngBounds(southWest, northEast);
+
+map.setMaxBounds(bounds);
+map.on('drag', function() {
+    map.panInsideBounds(bounds, { animate: false });
+});
+
+  //Icons
+  var macrorregiões = L.icon({
+    iconUrl: 'icons/macrorregiões.png',
+	iconRetinaUrl: 'icons/macrorregiões.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	tooltipAnchor: [16, -28],
+});		
+	var nações = L.icon({
+    iconUrl: 'icons/nações.png',
+	iconRetinaUrl: 'icons/nações.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	tooltipAnchor: [16, -28],
+});		
+	var cidades = L.icon({
+    iconUrl: 'icons/cidades.png',
+	iconRetinaUrl: 'icons/cidades.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	tooltipAnchor: [16, -28],
+});		
+	var outros = L.icon({
+    iconUrl: 'icons/outros.png',
+	iconRetinaUrl: 'icons/outros.png',
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
+	popupAnchor: [1, -34],
+	tooltipAnchor: [16, -28],
+});	
+
+  //Coordinate Finder
+   
+  //Markers
+  
+    var R_kest = L.marker([-10.314919, -24.960937], {icon: macrorregiões}).bindPopup("<h1> <center> Kestgart </center> </h1> <h3> Kestgart é lar de vários reinos independentes, mais rústicos, ligados estreitamente ao cultivo da terra e à criação de bestas, e muitos dos quais ocupados com guerras entre si ou contra o Norte. Dentre seus muitos líderes, ninguém é mais importante do que Úrdvird, Rei de Derandorn, único desses territórios a rivalizar com os hepríssitas em condições de igualdade. Sua senilidade e saúde debilitada, ainda que o mantenham entrevado em sua cama, não lhe tiraram a sanidade, nem o impedem de projetar sua autoridade através de seu filho, o Príncipe Derhith. </h3> <img src='' />");
+    var R_parn = L.marker([21.289374, -47.285156], {icon: macrorregiões}).bindPopup("<h1> <center> Parníssia </center> </h1> <h3> Reclamada pelo Império Hepríssita, Parníssia é um lugar de fronteiras sólidas, militarmente pujante, avançado em conhecimentos arquitetônicos e navais e devoto fanático ao Deus da Criação, lá chamado de Talenarphas; e sua linhagem de Imperadores, hoje encarnada pelo jovem casal Drusus e Aldrinus, acredita fervorosamente que é seu destino divino unificar todas as terras sob a bandeira da humanidade. E talvez não esteja enganada... </h3> <img src='' />");
+    var R_hru = L.marker([-39.774769, 35.15625], {icon: macrorregiões}).bindPopup("<h1> <center> Hrustgart </center> </h1> <h3> Hrustgart, a mais nova das regiões humanas, é bastante parecida com Kestgart nos costumes e crenças, e consiste em apenas dois reinos, ainda que um deles, Dunvendorn, regido por Isimurd 1º, seja o maior e um dos mais ricos do mundo, tendo para tanto se beneficiado da amizade com os seus vizinhos anões e gnomos e dos ermos circundantes que gritavam para serem tomados. O outro reino, Rovondorn, embora menos relevante politicamente, ganhou muita notoriedade recentemente por se descobrir palco de origem do Vórtice. </h3> <img src='' />");
+    var R_nort = L.marker([55.178868, 27.421875], {icon: macrorregiões}).bindPopup("<h1> <center> O Norte </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+    var R_inacabadas = L.marker([-43.325178, 99.140625], {icon: macrorregiões}).bindPopup("<h1> <center> As Terras Inacabadas </center> </h1> <h3> Diz-se que, após longa e indefinida disputa pelo domínio do mundo, os dois Senhores dos Deuses chegaram até o fim do Leste, onde a poeira do Início ainda jazia intocada por seus poderes; e, com ela, o Deus da Criação – Lird, na língua kestish – ergueu como símbolo de sua autoridade uma estátua à sua semelhança, que foi logo arruinada pelo Deus da Destruição, Ûdnor. Cada um dos três pedaços a que foi reduzida foi lançado para longe e aterrissou em um ponto diferente da terra, e, ao redor deles, do caos e do estardalhaço, nasceram tribos de homens. Enfim satisfeitos com tão inesperado resultado de suas desavenças, os dois deuses deixaram o mundo e seu novo povo a seu próprio arbítrio, e as últimas regiões por onde passaram se mantiveram e se mantêm inacabadas e repletas de mistério. </h3> <img src='' />");
+    var R_illdahara = L.marker([-63.391522, -5.273438], {icon: macrorregiões}).bindPopup("<h1> <center> Illdahara </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  //Parnissia
+  var R_aurianas = L.marker([37.160317, -88.242187], {icon: nações}).bindPopup("<h1> <center> Aurianas </center> </h1> <h3> Em construção ._. </h3> <img src='' />", {maxWidth : 250});
+  var R_hessenias = L.marker([41.934977, -68.90625], {icon: nações}).bindPopup("<h1> <center> Hessênias </center> </h1> <h3> A Província de Hessênias foi a primeira região do Continente a ser conquistada pelos hepríssitas. Outrora habitada pelos elfos e por eles chamada de Anhangahila, suas vastas florestas de cedros, olmos, amoreiras e caquizeiros hoje jazem reduzidas a ilhas de bosques em meio a plantações de uvas, figos e grãos. </h3> <img src='' />");
+  var R_higristas = L.marker([29.993002, -68.730469], {icon: nações}).bindPopup("<h1> <center> Higristas </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_heprissios = L.marker([52.375599, -43.945313], {icon: nações}).bindPopup("<h1> <center> Hepríssios </center> </h1> <h3> Cerne do Império Hepríssita e berço de um dos três grupos dos Filhos da Estátua, a Ilha de Hepríssios é tão poderosa quanto notória. Cingida por mares tranquilos, bem defendida por navios e torres litorâneas e entrincheirada atrás de suas províncias continentais, poucas ameaças externas podem abalá-la. Já as internas, as que se ocultam por trás de palavras doces e manjares exóticos... essas são sempre presentes. </h3> <img src='' />", {maxWidth : 400});
+  var R_lircinis = L.marker([20.13847, -63.984375], {icon: nações}).bindPopup("<h1> <center> Lircinis </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_rivantios = L.marker([0.703107, -64.335938], {icon: nações}).bindPopup("<h1> <center> Rivântios </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_borius = L.marker([55.578345, 4.746094], {icon: nações}).bindPopup("<h1> <center> Parníssia Borius </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_siluris = L.marker([55.825973, -85.253906], {icon: nações}).bindPopup("<h1> <center> Silúris e Núria </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_goanhan = L.marker([0.527336, -97.558594], {icon: nações}).bindPopup("<h1> <center> Goan-han </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_aenesponcios = L.marker([45.95115, -28.652344], {icon: nações}).bindPopup("<h1> <center> Aenespôncios </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_anaventa = L.marker([54.162434, -23.378906], {icon: nações}).bindPopup("<h1> <center> Anaventa </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_mircenias = L.marker([31.952162, -37.441406], {icon: nações}).bindPopup("<h1> <center> Mircênias </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_melitenas = L.marker([26.824071, -81.123047], {icon: nações}).bindPopup("<h1> <center> Melitenas </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_brasalta = L.marker([27.916767, -75.146484], {icon: nações}).bindPopup("<h1> <center> Brasalta </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_savlia = L.marker([24.20689, -77.695313], {icon: nações}).bindPopup("<h1> <center> Savlia </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_viduci = L.marker([23.402765, -73.652344], {icon: nações}).bindPopup("<h1> <center> Viduci </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  var C_sarensso = L.marker([39.368279, -58.095703], {icon: cidades}).bindPopup("<h1> <center> Sarensso </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_hereldas = L.marker([52.696361, -50.712891], {icon: cidades}).bindPopup("<h1> <center> Hereldas </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_altinias = L.marker([32.842674, -80.507813], {icon: cidades}).bindPopup("<h1> <center> Altínias </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_helensca = L.marker([26.194877, -52.382812], {icon: cidades}).bindPopup("<h1> <center> Helensca </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_mircenias = L.marker([34.234512, -30.9375], {icon: cidades}).bindPopup("<h1> <center> Cidade de Mircênias </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_barsales = L.marker([44.653024, -31.728516], {icon: cidades}).bindPopup("<h1> <center> Barsales </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_ascelecia = L.marker([17.308688, -47.460937], {icon: cidades}).bindPopup("<h1> <center> Ascelecia Nova </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_issurium = L.marker([5.266008, -54.667969], {icon: cidades}).bindPopup("<h1> <center> Issúrium </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_kali = L.marker([-5.090944, -93.691406], {icon: cidades}).bindPopup("<h1> <center> Kali </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  //Kestgart
+  var R_derandorn = L.marker([-7.885147, -38.496094], {icon: nações}).bindPopup("<h1> <center> Derandorn </center> </h1> <h3> Derandorn, berço de um dos três grupos dos Filhos da Estátua, contrasta com os demais reinos e feudos de Kestgart por seu poderio bélico e estabilidade política. Seus exércitos de lanceiros e cavaleiros, contrariando as expectativas dos mais pessimistas, e mesmo as apostas de alguns simplesmente realistas, têm obtido várias vitórias contra a infantaria pesada dos hepríssitas e avançado para o norte, enquanto ao sul e ao leste há esforços diplomáticos para se aliar às terras vizinhas ou anexá-las. Será aqui o berço de um novo império? </h3> <img src='' />");
+  var R_eogan = L.marker([-23.241346, -11.953125], {icon: nações}).bindPopup("<h1> <center> Éogan </center> </h1> <h3> Os cerrados de Éogan são domínio de uma gente rústica – até para os padrões de Kestgart – que por muito tempo tem rivalizado com Farnuin e Brenwalt, e se orgulha de seus ágeis cavaleiros – os hobelar –, de seu queijo de iaque e de seus longos e adornados bigodes. </h3> <img src='' />");
+  var R_brenwalt = L.marker([-23.402765, -24.433594], {icon: nações}).bindPopup("<h1> <center> Brenwalt </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_nivka = L.marker([-23.725012, -49.042969], {icon: nações}).bindPopup("<h1> <center> Nivka </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_grimvik = L.marker([-30.902225, -36.91406], {icon: nações}).bindPopup("<h1> <center> Grimvik </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_gaulea = L.marker([-33.870416, -47.285156], {icon: nações}).bindPopup("<h1> <center> Gáulea </center> </h1> <h3> As florestas densas e escuras da Gáulea são o lar de homens temidos e ojerizados, não só por sua hostilidade e suas tradições de canibalismo, como também por pertencerem a uma genealogia completamente alheia às três grandes famílias do Filhos da Estátua – Hepríssitas, Derandornianos e Illdahari. Magísteres e arqueólogos ainda não decifraram a origem dos gáuleos, mas talvez tal conhecimento esteja melhor oculto. </h3> <img src='' />");
+  var R_kodir = L.marker([-45.213004, -39.902344], {icon: nações}).bindPopup("<h1> <center> Kodir </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_eldlach = L.marker([-44.087585, -57.65625], {icon: nações}).bindPopup("<h1> <center> Eldlach </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_druiendelm = L.marker([-3.337954, -9.84375], {icon: nações}).bindPopup("<h1> <center> Druiendelm </center> </h1> <h3> Um país de muitos rios, brejos e pântanos, cujo povo descende mais de perto daqueles a quem os elfos no passado ensinaram seus dons mágicos. Hoje tais saberes se encontram sobremaneira diminuídos e mal interpretados, sob a forma de meros ritos domésticos praticados pelo povo comum, mas ainda há uns poucos que os preservaram e os desenvolveram e se mantêm como senhores, guardiões e mestres-de-saber da região – os druidas. </h3> <img src='' />");
+  var R_kenduin = L.marker([-1.58183, 6.328125], {icon: nações}).bindPopup("<h1> <center> Kenduin </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_farnuin = L.marker([-18.479609, 5.097656], {icon: nações}).bindPopup("<h1> <center> Farnuin </center> </h1> <h3> Farnuin já foi maior e mais próspero, antes da Horda Vampiresca ter consumido suas bordas e cidades. Porém, a despeito de suas tristezas, recuperou a estabilidade de seu governo, hoje encabeçado pelo jovem Rei Edberk, e o que resta de seu território retém uma flagrante fertilidade que compensa sua falta de acessos ao mar. </h3> <img src='' />");
+  var R_berentol = L.marker([-18.979026, -66.621094], {icon: nações}).bindPopup("<h1> <center> Berentol </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_lud = L.marker([-26.784847, -59.238281], {icon: nações}).bindPopup("<h1> <center> Lud </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_brlach = L.marker([-30.600094, -66.269531], {icon: nações}).bindPopup("<h1> <center> Brlach </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_dervech = L.marker([-30.902225, -59.150391], {icon: nações}).bindPopup("<h1> <center> Dervech </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_celdr = L.marker([-29.916852, -54.052734], {icon: nações}).bindPopup("<h1> <center> Celdr </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_ardnoragh = L.marker([-20.303418, -30.849609], {icon: nações}).bindPopup("<h1> <center> Ard Noragh </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_diors = L.marker([-17.224758, -27.861328], {icon: nações}).bindPopup("<h1> <center> Diors </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_lrangaer = L.marker([-14.689881, -19.511719], {icon: nações}).bindPopup("<h1> <center> Lrangaer </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_ebda = L.marker([-13.83808, -5.800781], {icon: nações}).bindPopup("<h1> <center> Ebdanuin </center> </h1> <h3> Novo nos registros históricos, Ebdanuin era originalmente parte de Éogan, até ser tomado por força de armas pelos farnuinianos. Décadas depois, o território foi reclamado por nativos rebeldes, que, todavia, não aceitaram entregá-lo a seus governantes primeiros, e estabeleceram ali seu próprio reino, sob o comando de Artairdh, o Rei Plebeu. </h3> <img src='' />");
+
+  var C_ismer = L.marker([-0.263671, -30.761719], {icon: cidades}).bindPopup("<h1> <center> Ísmer </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_pruika = L.marker([-20.13847, -53.613281], {icon: cidades}).bindPopup("<h1> <center> Pruika </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_ascelendorn = L.marker([10.228437, -41.923828], {icon: cidades}).bindPopup("<h1> <center> Ascelendorn </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_uldenberg = L.marker([-20.715015, -42.099609], {icon: cidades}).bindPopup("<h1> <center> Uldenberg </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_outeiro = L.marker([0.966751, -14.589844], {icon: cidades}).bindPopup("<h1> <center> Outeiro </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_brejoescuro = L.marker([-11.350797, -9.228516], {icon: cidades}).bindPopup("<h1> <center> Brejo Escuro </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_brenarl = L.marker([-28.381735, -27.685547], {icon: cidades}).bindPopup("<h1> <center> Bren Arl </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_gaednvere = L.marker([-20.303418, -14.677734], {icon: cidades}).bindPopup("<h1> <center> Gaednvere </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_fengaria = L.marker([-14.264383, -0.615234], {icon: cidades}).bindPopup("<h1> <center> Fengária </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  //Hrustgart
+  var R_rovondorn = L.marker([-25.799891, 17.578125], {icon: nações}).bindPopup("<h1> <center> Rovondorn </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_dunvendorn = L.marker([-37.300275, 40.605469], {icon: nações}).bindPopup("<h1> <center> Dunvendorn </center> </h1> <h3> Dunvendorn é a mais nova nação do Continente, estabelecida há menos de duzentos anos por exploradores rovondornianos, mas já ostenta os títulos de mais vasta – graças aos ermos próximos sem donos prévios – e de uma das mais ricas – graças ao auxílio dos anões de Argnhold e dos gnomos em Passo-Curto. No entanto, o mesmo Oeste que deu origem a este reino agora promete seu fim, pois lá, além das montanhas, nasceu o Vórtice e seu sangue sortílego. </h3> <img src='' />");
+  
+  var C_hrovna = L.marker([-26.824071, 40.253906], {icon: cidades}).bindPopup("<h1> <center> Hrovna </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_dursken = L.marker([-37.579413, 30.234375], {icon: cidades}).bindPopup("<h1> <center> Dursken </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_desperia = L.marker([-5.353521, 31.552734], {icon: cidades}).bindPopup("<h1> <center> Despéria </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_trovalon = L.marker([-15.707663, 19.511719], {icon: cidades}).bindPopup("<h1> <center> Trovalon </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_bordren = L.marker([-40.713956, 49.130859], {icon: cidades}).bindPopup("<h1> <center> Bordren </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_orslen = L.marker([-51.944265, 26.455078], {icon: cidades}).bindPopup("<h1> <center> Orslen </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  
+  var C_talu = L.marker([-59.844815, -61.435547], {icon: cidades}).bindPopup("<h1> <center> Talúbria </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_xarg = L.marker([-61.980267, -65.126953], {icon: cidades}).bindPopup("<h1> <center> Xargudin </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  //NaoHumanos
+  var R_leahila = L.marker([15.114553, 13.710938], {icon: nações}).bindPopup("<h1> <center> Leahila </center> </h1> <h3> O Reino dos Elfos perdeu muito do seu território e sua gente ao longo das eras, para o Senhor dos Ventos, para os dohur de Nir’Uqula, para a expansão humana, para a Horda Vampiresca, mas, ainda assim, conseguiu sempre se conservar firme e altivo. Pouco tempo atrás, contudo, uma nova ameaça se revelou, escondida sob um outono que se estendia por demais: uma anomalia no Ciclo, um vórtice que devora o etéreo e perverte a matéria, uma promessa de ruína para toda a floresta. Será que o povo e sua Rainha conseguirão continuar a perseverar? </h3> <img src='' />", {maxWidth : 330});
+  var R_vrataria = L.marker([-40.178873, 2.8125], {icon: nações}).bindPopup("<h1> <center> Vratária </center> </h1> <h3> Conquanto vasta, Vratária foi sempre, mesmo no apogeu dos vampiros, uma região predominantemente erma, à exceção de poucas aldeias, fazendas, fortes e de seu centro de governo, a poderosa cidade de Enkhvaar. Apesar da fama justificada de berço de terrores e opressões, o lugar tem beleza para ser achada, com prados e urzais e córregos cristalinos que serviram longamente para nutrir os outrora inumeráveis cavalos da Horda Sedenta e de seus aliados vithmiri. </h3> <img src='' />");
+  var R_vithmir = L.marker([-46.316584, -5.097656], {icon: nações}).bindPopup("<h1> <center> Vithmir </center> </h1> <h3> A terra de Vithmir abriga uma das linhagens de homens que não se originaram da Estátua Divina, o que lhes rende uma imagem de profanos e traiçoeiros; e sua devoção antiga aos vampiros obviamente contribuiu para tal percepção. Suas hostes de cavaleiros, carroceiros e derruba-cavalos foram quase obliteradas pelo Sul do Sul há três séculos, e hoje o que resta da população busca sobreviver em suas poucas e precárias aldeias, mas sua adoração aos seus também rareados senhores imortais é maior do que nunca. </h3> <img src='' />");
+  var R_gogarid = L.marker([-45.58329, -15.117188], {icon: nações}).bindPopup("<h1> <center> Gogarid </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_niruqula = L.marker([15.45368, 48.164063], {icon: nações}).bindPopup("<h1> <center> Nir'Uqula </center> </h1> <h3> Houve tempos em que Nir’Uqula era um nome dito e pensado com júbilo, pois correspondia aos mais belos jardins, pomares e bosques selvagens já cultivados pelos elfos. Mas, quando os hereges tentaram semear o ventre do Sol e trazer à existência uma nova e, a seu ver, melhor Deusa, as cinzas que foram produzidas em sua tolice cobriram toda a região e a tornaram escura, triste e hostil. </h3> <img src='' />");
+  var R_passocurto = L.marker([-17.056785, 41.923828], {icon: nações}).bindPopup("<h1> <center> Passo-Curto </center> </h1> <h3> Ao contrário do que muitos pensam, o nome destes bosques não é uma referência ao tamanho de seus habitantes, os gnomos, mas à sua crença de que qualquer lugar no mundo jaz a pouca distância dali. Coberta por sombras frescas, abastecida por mel, cevada e frutos exóticos e protegida pelas águas do Ipliawa ao oeste e ao sul, pelas montanhas ao leste e pelos andárvores ao norte, a região é uma das melhores para se comprar uma casa e viver em paz (se você não se incomodar com a euforia incessante dos nativos). </h3> <img src='' />");
+  var R_campinas = L.marker([11.005904, -26.191406], {icon: nações}).bindPopup("<h1> <center> Campinas da Contemplação </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_errantes = L.marker([-60.75916, -31.289063], {icon: nações}).bindPopup("<h1> <center> Reinos Errantes </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_argnhold = L.marker([-30.751278, 24.257813], {icon: nações}).bindPopup("<h1> <center> Argnhold </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_drakntor = L.marker([-1.933227, -49.21875], {icon: nações}).bindPopup("<h1> <center> Drakntor </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_ixil = L.marker([-8.581021, 14.589844], {icon: nações}).bindPopup("<h1> <center> Íx-il </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_burugantl = L.marker([23.885838, 51.152344], {icon: nações}).bindPopup("<h1> <center> Burugantl </center> </h1> <h3> Nestes pântanos de encantamentos traiçoeiros habitam os dashimbaras, seres selvagens de membros alongados e costas arquejadas, que se acredita serem uma transformação da raça dohur, embora pouca semelhança partilhem com esta além da pele de um cinzento desbotado, da índole cruel e das faces elfoides, todavia quase sempre ocultas sob expressões horríveis entalhadas em máscaras de madeira e marfim. </h3> <img src='' />");
+  var R_dargara = L.marker([30.600094, -100.546875], {icon: nações}).bindPopup("<h1> <center> Dargara </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_iasavur = L.marker([-37.857507, -11.425781], {icon: nações}).bindPopup("<h1> <center> Iasavur </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_chawarsutai = L.marker([-48.341646, 15.644531], {icon: nações}).bindPopup("<h1> <center> Chawar Sutai </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var R_ulglat = L.marker([-8.841651, 7.03125], {icon: nações}).bindPopup("<h1> <center> Ulglat </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  var C_vrissoyt = L.marker([-30.448674, 2.109375], {icon: cidades}).bindPopup("<h1> <center> Vrissóyt </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_melkantursh = L.marker([20.715015, -93.076172], {icon: cidades}).bindPopup("<h1> <center> Melkantursh </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_mithrinhall = L.marker([-8.233237, -50.976563], {icon: cidades}).bindPopup("<h1> <center> Mithrnhall </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_wahathanka = L.marker([20.303418, -25.488281], {icon: cidades}).bindPopup("<h1> <center> Wahathanka </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_uivoforte = L.marker([15.114553, -18.896484], {icon: cidades}).bindPopup("<h1> <center> Uivo Forte </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_guatissuyu = L.marker([15.114553, 1.230469], {icon: cidades}).bindPopup("<h1> <center> Guatissuyu </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_ethleioq = L.marker([7.275292, 24.697266], {icon: cidades}).bindPopup("<h1> <center> Ethleióq </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_baurak = L.marker([-44.840291, -22.236328], {icon: cidades}).bindPopup("<h1> <center> Baurak </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_borgok = L.marker([-32.546813, -3.427734], {icon: cidades}).bindPopup("<h1> <center> Borgok </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_enkhvaar = L.marker([-41.376809, 12.128906], {icon: cidades}).bindPopup("<h1> <center> Enkhvaar </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_mralsk = L.marker([-45.274886, 1.845703], {icon: cidades}).bindPopup("<h1> <center> Mralsk </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_argnhall = L.marker([-33.651208, 21.621094], {icon: cidades}).bindPopup("<h1> <center> Argnhall </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_odn = L.marker([-44.339565, 20.566406], {icon: cidades}).bindPopup("<h1> <center> Ödnstromhall </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_tlaloc = L.marker([31.203405, 54.84375], {icon: cidades}).bindPopup("<h1> <center> Tlaloc-ti </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_baac = L.marker([27.839076, 64.951172], {icon: cidades}).bindPopup("<h1> <center> Baac-ti </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_soroc = L.marker([24.44715, 58.886719], {icon: cidades}).bindPopup("<h1> <center> Soroc-ti </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_raz = L.marker([17.224758, 63.457031], {icon: cidades}).bindPopup("<h1> <center> Raz'Huitl </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var C_clare = L.marker([-13.581921, 44.296875], {icon: cidades}).bindPopup("<h1> <center> Clareira Cantante </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  
+  var O_utanidi = L.marker([25.165173, 26.806641], {icon: outros}).bindPopup("<h1> <center> O Utanidi </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_cabeca = L.marker([54.572062, -46.494141], {icon: outros}).bindPopup("<h1> <center> A Cabeça de Talenaris </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_zura = L.marker([13.325485, -63.28125], {icon: outros}).bindPopup("<h1> <center> Ruínas de Zurajar </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_corpo = L.marker([4.915833, -29.882813], {icon: outros}).bindPopup("<h1> <center> O Corpo de Lird </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_ninguem = L.marker([10.746969, -47.109375], {icon: outros}).bindPopup("<h1> <center> Terra de Ninguém </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_mlad = L.marker([-5.353521, -57.480469], {icon: outros}).bindPopup("<h1> <center> Mladriav </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_draknstrand = L.marker([-13.667338, -51.943359], {icon: outros}).bindPopup("<h1> <center> Draknstrand </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_golfo = L.marker([39.707187, -80.332031], {icon: outros}).bindPopup("<h1> <center> Golfo da Acolhida </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_baia = L.marker([44.339565, -96.240234], {icon: outros}).bindPopup("<h1> <center> Baía da Manopla </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_weyhil = L.marker([16.551962, 29.443359], {icon: outros}).bindPopup("<h1> <center> Charcos de Weyhil </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_yoru = L.marker([11.436955, 52.998047], {icon: outros}).bindPopup("<h1> <center> Covil de Yoruata </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_frali = L.marker([0.439449, 2.373047], {icon: outros}).bindPopup("<h1> <center> Rio Fralirk </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_zarre = L.marker([-2.196727, 14.589844], {icon: outros}).bindPopup("<h1> <center> Zarreneth </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_goi = L.marker([-2.460181, 17.929688], {icon: outros}).bindPopup("<h1> <center> Rio Goi'Thuras </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_ipli = L.marker([0.878872, 36.474609], {icon: outros}).bindPopup("<h1> <center> Rio Ipliawa </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_andarv = L.marker([-5.003394, 42.802734], {icon: outros}).bindPopup("<h1> <center> Andárvores </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_torre = L.marker([0.175781, 39.990234], {icon: outros}).bindPopup("<h1> <center> Torre Abandonada </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_tzen = L.marker([-6.664608, 60.644531], {icon: outros}).bindPopup("<h1> <center> Tzenoq </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_anza = L.marker([2.284551, 71.894531], {icon: outros}).bindPopup("<h1> <center> Anzária </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_pipas = L.marker([-28.767659, 31.640625], {icon: outros}).bindPopup("<h1> <center> Vale das Pipas </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_odna = L.marker([-22.350076, 60.380859], {icon: outros}).bindPopup("<h1> <center> Caer Odna </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_kirssa = L.marker([-42.163403, 57.128906], {icon: outros}).bindPopup("<h1> <center> Kirssa </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_yualepaq = L.marker([-42.811522, 67.412109], {icon: outros}).bindPopup("<h1> <center> Yua'lepaq </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_gnomos = L.marker([-50.120578, 68.642578], {icon: outros}).bindPopup("<h1> <center> Acampamento Gnômico </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_gasker = L.marker([-48.516604, 24.257813], {icon: outros}).bindPopup("<h1> <center> Caer Gasker </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_sorga = L.marker([-55.37911, 27.509766], {icon: outros}).bindPopup("<h1> <center> Caer Sorga </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_stolv = L.marker([-49.61071, -31.376953], {icon: outros}).bindPopup("<h1> <center> Mar de Stolv </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_tarra = L.marker([-57.938183, 1.582031], {icon: outros}).bindPopup("<h1> <center> Tarrakand </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_enkhvech = L.marker([-35.960223, 9.492188], {icon: outros}).bindPopup("<h1> <center> Torre de Enkhvech </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_besra = L.marker([-29.075375, 47.900391], {icon: outros}).bindPopup("<h1> <center> Besrafold </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_erden = L.marker([-49.95122, 41.484375], {icon: outros}).bindPopup("<h1> <center> Erdenja </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_timurk = L.marker([-59.800634, 45.703125], {icon: outros}).bindPopup("<h1> <center> Timurk </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_volgr = L.marker([-28.22697, 69.785156], {icon: outros}).bindPopup("<h1> <center> Volgrada </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_vort = L.marker([-6.140555, 25.576172], {icon: outros}).bindPopup("<h1> <center> O Vórtice </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_farc = L.marker([-23.563987, 2.285156], {icon: outros}).bindPopup("<h1> <center> Farcaster </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_angre = L.marker([-23.079732, 12.392578], {icon: outros}).bindPopup("<h1> <center> Angregotra </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+  var O_deusa = L.marker([18.729502, -0.175781], {icon: outros}).bindPopup("<h1> <center> A Deusa </center> </h1> <h3> Em construção ._. </h3> <img src='' />");
+
+  //Marker Groups
+  var mg_Macrorregiões = L.layerGroup([R_kest,R_parn,R_hru,R_nort,R_inacabadas,R_illdahara]);
+  var mg_Nações = L.layerGroup([R_aurianas,R_hessenias,R_higristas,R_heprissios,R_lircinis,R_rivantios,R_borius,R_siluris,R_goanhan,R_aenesponcios,R_anaventa,R_mircenias,R_melitenas,R_brasalta,R_savlia,R_viduci,R_derandorn,R_eogan,R_brenwalt,R_nivka,R_grimvik,R_gaulea,R_kodir,R_eldlach,R_druiendelm,R_kenduin,R_farnuin,R_berentol,R_lud,R_brlach,R_dervech,R_celdr,R_ardnoragh,R_diors,R_lrangaer,R_rovondorn,R_dunvendorn,R_leahila,R_vrataria,R_vithmir,R_gogarid,R_niruqula,R_passocurto,R_campinas,R_errantes,R_argnhold,R_drakntor,R_ixil,R_burugantl,R_dargara,R_iasavur,R_chawarsutai,R_ulglat,R_ebda]);
+  var mg_Cidades = L.layerGroup([C_sarensso,C_vrissoyt,C_sarensso,C_hereldas,C_altinias,C_helensca,C_mircenias,C_barsales,C_ascelecia,C_issurium,C_kali,C_ismer,C_pruika,C_ascelendorn,C_uldenberg,C_outeiro,C_brejoescuro,C_brenarl,C_gaednvere,C_fengaria,C_hrovna,C_dursken,C_desperia,C_trovalon,C_bordren,C_melkantursh,C_mithrinhall,C_wahathanka,C_uivoforte,C_guatissuyu,C_ethleioq,C_baurak,C_borgok,C_enkhvaar,C_mralsk,C_argnhall,C_odn,C_tlaloc,C_baac,C_soroc,C_raz,C_talu,C_xarg,C_clare,C_orslen]);
+  var mg_Outros = L.layerGroup([O_utanidi,O_cabeca,O_zura,O_corpo,O_ninguem,O_mlad,O_draknstrand,O_golfo,O_baia,O_weyhil,O_yoru,O_frali,O_zarre,O_goi,O_ipli,O_andarv,O_torre,O_tzen,O_anza,O_pipas,O_odna,O_kirssa,O_yualepaq,O_gnomos,O_gasker,O_sorga,O_stolv,O_tarra,O_enkhvech,O_besra,O_erden,O_timurk,O_volgr,O_vort,O_farc,O_angre,O_deusa]);
+  
+  //Marker Overlay
+  var overlays={
+  "Macrorregiões" : mg_Macrorregiões,
+  "Nações" : mg_Nações,
+  "Cidades" : mg_Cidades,
+  "Pontos de Interesse" : mg_Outros,
+}
+  
+  //GROUP CONTROLS
+  L.control.layers(null, overlays).addTo(map);
+  
+    </script>
+  </body>
+</html>
